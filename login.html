@@ -1,0 +1,232 @@
+<html xmlns:fb="http://ogp.me/ns/fb#">
+<meta charset="utf-8" name="viewPort" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scale=no;" />
+
+<link rel='stylesheet' href='css/login.css' type='text/css' media='screen'/>
+<title>Welcome to Mypub : My Republic, My Pub</title>
+<script src="js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="join/join.js"></script>
+<script type="text/javascript">
+
+function join(){
+$('#mypublogin').slideUp(500);
+$('#mypubjoin').slideDown(500);
+
+
+}
+function tologin(){
+$('#mypublogin').slideDown(500);
+$('#mypubjoin').slideUp(500);
+
+
+}
+        function loginConfirm() {
+
+				
+                var action = $("#form1").attr('action');
+                var form_data = {
+                        user_id: $("#user_id").val(),
+                        user_pw: $("#user_pw").val(),
+                        is_ajax: 1
+                };
+                $.ajax({
+                        type: "POST",
+                        url: action,
+                        data: form_data,
+                        success: function(response) {
+                                if(response == 'success') {
+                                        $("#about").html("<center style='color:green;font-weight:bold'>로그인 성공!</center>");
+										location.replace('index.php');
+                                }
+                                else {
+                                        $("#about").html("<center style='color:red'>아이디 또는 비밀번호가 잘못되었습니다.</center>"); 
+                                }
+                        }
+                });
+                return false;
+        }
+
+</script>
+
+
+<body>
+        <div id="fb-root"></div>
+        <script>
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '1429310397341362', // 앱 ID
+              status     : true,          // 로그인 상태를 확인
+              cookie     : true,          // 쿠키허용
+              xfbml      : true           // parse XFBML
+            });
+   
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    
+                    FB.api('/me', function(user) {
+                        if (user) {
+							var image = 'http://graph.facebook.com/' + user.id + '/picture';
+							'http://graph.facebook.com/' + user.id + '/picture';
+							<?
+							$facebook=$_GET['facebook'];
+							if (!isset($facebook))
+							echo "loginFacebook(user.id, user.name, user.gender, user.email, image);";
+							?>
+							
+                        }
+                    });    
+                     
+                } else if (response.status === 'not_authorized') {
+
+                } else {
+                    
+                }
+            });
+			
+			
+
+
+            FB.Event.subscribe('auth.login', function(response) {
+                document.location.reload();
+            });
+          };
+        
+          // Load the SDK Asynchronously
+          (function(d){
+             var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement('script'); js.id = id; js.async = true;
+             js.src = "//connect.facebook.net/ko_KR/all.js";
+             ref.parentNode.insertBefore(js, ref);
+           }(document));
+		   
+		   
+		   function fb_Login(){
+		   
+    FB.login(function(response) {
+
+        if (response.authResponse) {
+            console.log('Welcome!  Fetching your information.... ');
+            //console.log(response); // dump complete info
+            access_token = response.authResponse.accessToken; //get access token
+            user_id = response.authResponse.userID; //get FB UID
+
+            FB.api('/me', function(response) {
+                user_email = response.email; //get user email
+          // you can store this data into your database 
+					location.replace('login.html');
+
+            });
+
+        } else {
+            //user hit cancel button
+            console.log('User cancelled login or did not fully authorize.');
+
+        }
+    }, {
+        scope: 'publish_stream,email'
+    });
+	
+}
+
+function loginFacebook($id,$name,$gender,$mail,$image){
+            $.ajax({
+                        type: "POST",
+                        url: "fblogin.php",
+                        data: {
+						id : $id,
+						name : $name,
+						gender : $gender,
+						mail : $mail,
+						image : $image
+						},
+                        success: function(response) {
+                                if(response == 'addok') {
+                                        $("#about").html("환영합니다.");
+										location.replace('index.php');
+                                }
+                                else if(response == 'ok') {
+                                        $("#about").html("감사합니다"); 
+										location.replace('index.php');
+                                }
+								else
+								alert(response);
+								}
+                        
+                });
+	
+
+}
+
+
+
+        </script>
+
+
+		<style>
+		#mypubjoin{display:none;}
+		.form{border-radius:5 0}
+		</style>
+ 
+<div id=wrap>
+
+<font style=font-family:dek><strong>My Republic</strong><font size=5> MYPUB</font></font>&nbsp&nbsp<br>
+
+<div id=mypublogin>
+<br>
+처음이라면 <a class='link' style='font-size:25px;color:#777;cursor:hand' onclick=join()>여기</a>를 눌러 회원가입<br><br></font>
+<form id="form1" name="form1" action="login_ok.php" method="post">
+<input placeholder='아이디 ID' class='form' type='text' id='user_id' name='user_id' tabindex='1'/><br>
+<input placeholder='암호 Password'class='form' type='password' id='user_pw' name='user_pw' onKeyDown="javascript:if (event.keyCode == 13) loginConfirm();" tabindex='2'/><br>
+<div id="about" style='width:100%; text-align:center' ></div>
+</form>
+<input class='btn' type='button' id='login' tabindex='3' onclick='loginConfirm();' value='Login'/><br>
+<input class='btn' type='button' id='facebook' tabindex='3' onclick='fb_Login();' value=' Login with FACEBOOK'/>
+</div>
+<div id=mypubjoin>
+<br><br>
+<form name="user_form" action="join/add_db.php" method="post" onsubmit="return chk_input()">
+ID* &nbsp;&nbsp;<input class='form' type="text" name="fuserid" id="fuserid" maxlength="12" style="ime-mode:disabled" onblur="if(fuserid.value!='') checkID();">&nbsp;&nbsp;<div style="width:100%;text-align:center;" id="about2" align='center'></div>
+
+<br>
+<br />
+
+
+이름*&nbsp;&nbsp; <input class='form' type="text" name="fname" id="fname" maxlength="10" style=width:190> <br /> <br>
+암호*&nbsp;&nbsp; <input class='form' type="password" name="fpasswd" id="fpasswd" maxlength="10" style=width:190><br /><br>
+암호*&nbsp;&nbsp; <input class='form' type="password" name="fpasswd_re" id="fpasswd_re" maxlength="10" onblur="chk_passwd()" style=width:190> <br><font size="2">한번 더 입력해주세요</font> <br /><br>
+전화번호*&nbsp;&nbsp; <input class='form' style=width:170 type="text" name="phone" id="phone" maxlength="20"> <br><font size="2">친구 찾기등에 사용됩니다!</font> <br /><br>
+성별* 
+<input type="radio" name="fsex" value="m">남
+<input type="radio" name="fsex" value="w">여
+
+
+
+<br><br>
+이메일&nbsp;&nbsp; <input class='form' type="text" name="femail" maxlength="30" style=width:180><br><br>
+
+<input class='btn' type="submit" value="가입하기" style="background-color: #99F;">
+<br>
+<br>
+<a style=cursor:hand; onclick=tologin()>첫화면으로</a>
+
+
+
+
+
+
+
+
+<br>
+</font>
+</div>
+</div>
+
+
+
+<br>
+<br>
+<br>
+
+
+</body>
+  

@@ -1,0 +1,17 @@
+<div id=mycardek>
+<?
+include "../php/connect_db.php";
+$getid= $_POST[id];
+$sql = mysql_query("SELECT `cards`from cards where id='$getid'");
+$sql = mysql_fetch_array($sql,MYSQL_NUM);
+if ($sql[0]==null){?>
+
+<div id=mycardeknamespace>MY CARDs<div id=hidemycardek class=writebtn onclick="hideID('mycardek', 'blind', 500)">숨기기</div></div>
+<div id=tmpcards></div>
+
+<?}else{
+echo $sql[0];
+}
+?>
+
+</div>

@@ -1,0 +1,127 @@
+/*#writeforsch{border: 1px solid #dddddd;
+border-radius: 10px 0px;padding: 8 0;
+background-image:url(../icon/card.png);background-size:60px;display:none;}*/
+.metro{ width: 25%;
+cursor:hand;
+height: 50;
+margin-top: -15;
+float: left;
+text-align: center;
+margin-bottom:20;
+color:#FFF;
+line-height: 70px;font-family:dek;
+font-size: 14;}
+
+
+.writeoptions {cursor: hand;
+width: 59px;
+height: 40px;
+font-size: 13px;
+float:left;
+line-height:77px;
+background-color: #FFF;
+text-align: center;
+background-repeat: no-repeat;
+background-position: center 3;
+margin:5px;
+margin-top:3px;
+opacity:0.3
+}
+#titletoggles{background-image:url(../icon/title.png);background-size: 80px;background-position: center -4;}
+#cardtoggles{background-image:url(../icon/cards.png);background-size: 31px;background-position: center 6;}
+#uploadtoggles{background-image:url(../icon/upload.png);background-size: 27px;}
+#anonytoggles{background-image:url(../icon/anony.png);background-size: 28px;}
+.togglewrap{overflow: hidden;
+margin: auto;
+width: 288;padding-left: 28;}
+#mycardeknamespace{text-align:center;font-size:25;line-height: 40px;
+width: 60%;
+margin: auto;
+padding-left:5%;
+font-family:dek}
+
+#mycardek{border-top-width: 1px;
+border-top-style: dashed;
+border-top-color: rgb(126, 126, 126);
+padding: 10px 0px 30px;
+border-bottom-width: 1px;
+border-bottom-style: dashed;
+border-bottom-color: rgb(126, 126, 126);
+margin: 30 0;
+overflow: auto;
+text-align: center;}
+#hidemycardek{width:30%}
+
+
+.sym, .hum, .wow, .good, .sad{
+height:40;
+width:40;
+background-repeat: no-repeat;
+background-position: center;
+float: left;
+cursor:hand;}
+.sym{background-image:url(../icon/shy.png)}
+.hum{background-image:url(../icon/humor.png)}
+.wow{background-image:url(../icon/suprise.png)}
+.good{background-image:url(../icon/good.png)}
+.sad{background-image:url(../icon/sad.png)}
+#pointsbox{bottom: 10;
+right: 5;z-index:300;position:fixed;}
+/*
+#pointsbox{overflow:hidden;
+z-index:300;
+left: 0;
+top: 55;
+width: 40px;
+height: 40px;
+position: fixed;}
+ -webkit-transition:1s; For Safari 3.1 to 6.0 
+    transition:1s;
+#pointsbox{}*/
+.ui-slider {
+position: relative;
+text-align: left;
+margin: 30px;
+}
+.ui-slider-horizontal {
+height: .8em;
+border-radius: 10 0;
+}
+
+.ui-widget-content {
+border: 1px solid #ddd;
+background: #eeF;
+
+}
+.ui-slider .ui-slider-handle {
+position: absolute;
+z-index: 2;
+width: 35px;
+height: 35px;
+margin-top: -22px;
+margin-left: -20;
+cursor: default;}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+border: none;
+background: url(../icon/sad.png) 50% 50% no-repeat;
+font-weight: normal;
+color: #555555;
+}
+
+.ui-widget-header {
+background:#bbF;
+border-radius:10 0;
+}
+.ui-slider-horizontal .ui-slider-range {
+top: 0;
+height: 100%;}
+#eqt{
+height: 30;
+line-height: 30px;width:130;margin:auto;
+margin-top: 5;
+margin-bottom: -10;
+}
+#eqicon{background-image: url(../icon/eq.png);float: right;
+background-size: 30;width:30;height:30;background-repeat: no-repeat;}
+#pointsreq{opacity:0.5}

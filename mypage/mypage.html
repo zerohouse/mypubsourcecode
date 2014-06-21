@@ -1,0 +1,72 @@
+<meta charset="utf-8" name="viewPort" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scale=no;" />
+<link  type='text/css' rel='stylesheet' href='style.css' media='screen' />
+<script src="../js/jquery-1.10.2.min.js"></script>
+
+<?
+$id=$_GET['id'];
+include "../php/connect_db.php";
+$sql = mysql_query("SELECT * FROM user_data  WHERE `id` = '$id'");
+$user_data = mysql_fetch_array($sql,MYSQL_NUM);
+if ($user_data[10]==null)
+{$profileurl="../icon/profile.png";}
+else{$profileurl=$user_data[10];}
+if ($user_data[9]==null)
+{$backurl="../img/6.jpg";}
+else{$backurl=$user_data[9];}
+?>
+<body style="background-image:url(<?echo $backurl?>);background-size:cover;">
+
+<script >
+function friendReq() {
+
+
+  				$.ajax({
+                        type: "POST",
+                        url: "../php/req.php",
+                        data: {id: "<?echo $id?>", sort: 0},
+                        success: function(response) {
+						
+						if (response==100)
+						{alert("이미 친구입니다.");}
+						else if (response==200)
+						{alert("친구 요청 대기중입니다!");}
+						else if (response==300)
+						{alert("알림을 눌러보세요. 상대가 먼저 친구요청했어요.");}
+						else {
+						alert("친구요청 하였습니다.");
+						}
+
+								
+							}});							
+					
+					}
+		<?if ($user_id==$id){ ?>			
+$(function() {
+$('#myprofile').width($('#mpimage').width());
+});
+<?}?>
+</script>
+<div style='background-color:rgba(0,0,0,0.5);height:100%;width:100%;position:absolute;'>
+	<div class=mypage style="background-image:url(<?echo $backurl?>);background-size:cover;
+height: 100%;
+margin: auto;
+width: 900;
+background-position: center;">
+
+	<div class=mybackgrounddiv>
+
+<form name="upform" method="POST" enctype="multipart/form-data" action="upload.php">
+	<?if ($user_id==$id) {echo "<input type='file' name='back' onchange=this.form.submit() class=mybackground>";}?>
+	
+	
+	
+	<div class=profilewrap>
+	<div class=myprofilediv>
+	<? if ($user_id==$id) {echo "<input type='file' name='profile' onchange=this.form.submit() id=myprofile class=myprofile>";}?><img id=mpimage src='<?echo $profileurl?>'></div><div class=name><strong> &nbsp&nbsp&nbsp <?echo $user_data[2]?></strong><br><? if ($user_id!=$id){ echo "<a class=frreq onclick=\"friendReq('$id')\">친구신청</a>"; }?><a class=frreq href='../wall.html?id=<?echo $id?>&name=<?echo $user_data[2]?>' target=_blank>담벼락</a></div></div> 
+ </form>
+
+
+	</div>
+<?mysql_close($connect);?>
+	
+	

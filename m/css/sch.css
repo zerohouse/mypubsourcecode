@@ -1,0 +1,112 @@
+.moviewrap{ width:84%;
+box-shadow:1px 1px 1px silver;
+border: 1px solid #DDD;
+overflow:hidden;
+padding: 4%;
+margin: 10 4%;
+line-height: 20px;
+text-align: justify;
+border-radius: 10px 0px;background-color:rgba(255, 255, 255, 1);font-size:14px;}
+.moviewords{color:#777;}
+.movielink{text-decoration:none; font-size:15px; font-weight:700;
+color:#777;cursor:hand}
+.movielink:hover{color:#000;}
+
+.poster{max-width:100px;border-radius:5px 0px;float:left;margin-right:5%;}
+.schwbtn{cursor:hand;color:#777;margin:10px;float:left;line-height: 28px;}
+.schwbtn:hover{cursor:hand;color:#000}
+#writeschvalue{width:46%;float:left;padding:2%;}
+#schvalue{
+max-width:100%;
+float:left;
+border: 1px solid #dddddd;
+margin:10px;
+border-radius: 5px 0px;
+height: 30px;
+padding: 5px;}
+#schwindow{overflow: auto;
+margin: auto;
+width: 266px;
+line-height: 25px;}
+#schwindow, #writeit{display:none;}
+.writebysch{padding-top:10px}
+.schtitlearea, .schtextarea{width:92%;margin:10px 4%;border: 1px solid #dddddd;
+border-radius: 5px 0px;}
+.schtitlearea{font-weight:900;font-size:20px;text-align:center;padding:5px; height:35px}
+#writeit{margin-top:10px;}
+.schtextarea{margin-top:0;}
+
+.schiconwrap{width:300;margin:auto;overflow:auto;}
+#book , #news , #ency , #movie , #img, #doc, #local, #shop, #youtube, #web{
+width:40px;height:40px;background-size:40px;background-repeat:no-repeat;margin:10px;float:left;
+cursor:hand;
+color:#000;
+}
+
+
+#book{background-image:url(../sch/bookh.png)}
+#news{background-image:url(../sch/newsh.png)}
+#movie{background-image:url(../sch/movieh.png)}
+#img{background-image:url(../sch/imgh.png);
+width:48px;height:48px;background-size:48px;margin:2 7;
+background-position: center 6;}
+#ency{background-image:url(../sch/encyh.png)}
+
+#doc{background-image:url(../sch/doc.png)}
+#local{background-image:url(../sch/local.png)}
+#shop{background-image:url(../sch/shop.png)}
+#youtube{background-image:url(../sch/youtube.png);width:46;height:46;margin:6;
+background-size:46;
+background-position-y: 7;
+}
+#web{background-image:url(../sch/web.png)}
+.scon{opacity:0.4;}
+.opacity{opacity:1;}
+#doc:hover, #local:hover, #shop:hover, #youtube:hover, #web:hover,#ency:hover, #book:hover , #movie:hover, #news:hover, #img:hover{opacity:1}
+
+
+
+.removethis{width:25px;height:25px;
+position: absolute;
+z-index: 1;
+background-color: #FFF;
+border-radius: 10;
+background-color:#FFF;
+background-image:url(../icon/delh.png);
+border-radius:20px;
+background-size: 20px;
+cursor:hand;
+opacity: 0.8;
+background-repeat: no-repeat;
+background-position: center;}
+.removethis:hover{opacity: 1;}
+
+
+
+
+
+.plus{
+position: absolute;
+z-index: 1;
+background-color: #FFF;
+border-radius: 10;
+cursor:hand;
+width: 25;
+height: 25;
+float: right;
+background-image: url(../icon/plus.png);
+background-size: 20;
+background-position: center;
+background-repeat: no-repeat;
+opacity: 0.8;}
+.plus:hover{opacity:1}
+
+
+
+.map{margin:auto; width:250;
+border:1px solid #DDD;  height:150px; margin-bottom:10px; border-radius:10px 0px; margin:auto;}
+
+
+
+
+

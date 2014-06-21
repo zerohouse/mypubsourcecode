@@ -1,0 +1,154 @@
+body{font-family:pub;margin:0;padding:0;font-size:14px;background-image:url(../img/wall.jpg);
+
+background-size:100%;overflow:hidden;}
+.textarea{width:90%;margin-right:10%;}
+#layer-zone{position:absolute;top:0;}
+.layer{border: 1px solid #dddddd;
+height: 100px;
+border-radius: 15px 0px;
+padding: 2.5%;
+position: relative;
+padding-top: 10px;
+padding-bottom: 10px;
+text-align: center;
+background-color: #FFF;
+box-shadow: 2px 2px 2px silver;
+-moz-box-shadow: 2px 2px 2px silver;
+-webkit-box-shadow: 2px 2px 2px silver;
+position: absolute;
+top: 0;
+width: 200px;
+}
+#result{width: 80%;
+margin: auto;
+padding: 10%;
+position: absolute;
+background-color:rgba(0,0,0,0.4);z-index:2000;}
+#schs{overflow:hidden;height:40;}
+#sch:focus,#sch:active,#sch:hover{width:130;}
+#shadoweraze{cursor:hand;}
+#selector{width: 30;
+height: 30;
+top: 0;
+right: 0;
+margin: 5;
+position: absolute;
+border-radius: 15;
+border: 5px dotted #9999ff;
+font-size: 14px;
+color: #9999ff;
+line-height: 30px;
+}
+.poster{border:2px solid #FFF;margin:20}
+.imglayer{background-size:100% 100%;background-repeat:no-repeat;position:absolute;top:0;}
+
+
+#layer-zone {
+	overflow:   visible;
+}
+#makerbox{
+overflow:visible;
+text-align: left;
+padding: 10px;
+width: 50px;
+position: absolute;
+z-index: 300;
+top:0;
+right:10;
+}
+	
+	
+.ui-wrapper {
+	overflow:   visible !important;}
+	
+
+	
+.border{border-top:1px solid #ddd;height:5px;margin-top:15px;}
+	
+	
+.ui-rotatable-handle {
+top:0;
+background: rgba(255,255,255,0.5);
+cursor: pointer;
+height: 25;
+border-radius: 10px;
+position: absolute;
+z-index:1500;
+width: 25;
+background-image: url(rotate.png);
+background-size: 100%;}
+	
+	.ui-resizable {
+ position: absolute}
+	
+.ui-rotatable-handle.clone {
+	visibility:  hidden;}
+	
+.triangle {
+	width: 0;
+	height: 0;
+	border-right: 100px solid transparent;
+	border-bottom: 100px solid red;
+}
+
+.color{float:none;width:80}
+
+.el{margin:10 5;}
+
+.icon{width:50;height:50;margin:5px 0px;
+cursor:hand;
+background-size:45;background-position:center;background-repeat:no-repeat;float:left}
+
+#plus{width: 150px;
+display: block;
+position: absolute;
+right: 60;
+overflow:hidden;
+top: 0;}
+#pluslabel{float: left;
+height: 50;
+line-height: 50px;
+}
+#modify{width: 200px;
+display: block;
+position: absolute;
+right: 60;
+top: 50;
+padding: 0 15;
+}
+
+#schimg{cursor: hand;
+height: 30px;
+margin: 10px 8px;
+background: none;
+padding-left: 30px;
+padding-top: 5px;
+padding-bottom: 5px;
+float:left;
+background-image: url(../icon/sch1.png);
+background-size: 25px;
+background-repeat: no-repeat;
+background-position: 3px;
+border: none;
+border-radius: 5px;
+-webkit-transition: 0.5s;
+transition: 0.5s;
+width: 25px;
+opacity: 0.3;}
+#schimg:focus,#schimg:active,#schimg:hover{width:115;border:1px solid #777}
+
+
+#makerbox li{display:block;}
+#basicset,
+#borderset,
+#borderround,
+#shadowset,
+#paddingset{}
+
+
+.toggle{
+border: 1px solid #dddddd;
+padding: 20px;
+overflow: auto;
+border-radius: 10px 0px;}
+.togglebtn{ font-size:16px;margin:10px;cursor:hand}

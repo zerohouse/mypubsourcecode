@@ -1,0 +1,559 @@
+<meta charset="utf-8" name="viewPort" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scale=no;" />
+<?
+include "php/connect_db.php";
+$id = $_GET['id'];
+$sql = mysql_query("SELECT `contents`from wall where id='$id'");
+$wall = mysql_fetch_array($sql,MYSQL_NUM);
+?>
+
+<meta charset="utf-8" />
+<link rel="stylesheet" href="css/jquery-ui.css">
+<link  type='text/css' rel='stylesheet' href='css/main.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='css/sch.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='css/cards.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='pub/pub.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='css/groupsetting.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='css/wall.css' media='screen' />
+<link rel="stylesheet" href="css/jquery.ui.rotatable.css">
+
+  
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery.mobile-1.4.2.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/jquery.ui.rotatable.js"></script>
+<script type="text/javascript" src="js/jscolor/jscolor.js"></script> 
+<script type="text/javascript" src="js/mobiledrag.js"></script> 
+
+  <script src="js/simple-slider.js"></script>
+  <link href="css/simple-slider.css" rel="stylesheet" type="text/css" />
+  <link href="css/simple-slider-volume.css" rel="stylesheet" type="text/css" />  
+
+
+
+
+
+
+
+
+
+  <script>
+  
+
+
+  $("[data-slider]")
+    .each(function () {
+      var input = $(this);
+      $("<span>")
+        .addClass("output")
+        .insertAfter($(this));
+    })
+    .bind("slider:ready slider:changed", function (event, data) {
+      $(this)
+        .nextAll(".output:first")
+          .html(data.value.toFixed(3));
+    });
+	
+	
+	
+
+  </script>
+
+<body onkeydown='javascript:if (event.keyCode == 46) removeSelect();'>
+
+<div id=removewhensave>
+<div id=result onclick="hideID('result')"></div>
+
+<div id=makerbox class=letter >
+	<div  onclick="hideID('modify','blind',500);toggleID('plus')" style=background-image:url(wallcon/plus.png) class=icon></div>
+	<div id=plus class=letter style=width:150;>
+	<div class=togglebtn onclick=addNew()>낙서++</div>
+	<div class=togglebtn id=schs><input type=text placeholder='그림++' onkeydown='javascript:if (event.keyCode == 13) schSomething();' id=schimg><div id=pluslabel>그림++</div></div></div>
+	<div onclick="hideID('plus','blind',500);toggleID('modify')"; style=background-image:url(wallcon/palette.png) class=icon></div>
+
+		<div id=modify class=letter>
+	<div class=togglebtn onclick=toggleID('basicset');>기본</div>
+	<div id=basicset class=toggle>
+	<!--<div class=el> 글쓰기 <textarea value=dddddd id=textarea onkeyup="resize(this)" onchange=textSet();></textarea></div>-->
+	<div class=el> 색 <input id=color value=dddddd class='color' onchange=backColor(); readonly></div>
+	<div class=el> 투명도 <input id=opacity style=width:10px data-slider="true" onchange=opacitySet();></div>
+	<div class=el> 글자색 <input value=dddddd id=textcolor class='color' onchange=textColor(); readonly></div>
+	<div class=el> 글자크기 <input id=textsize data-slider="true" onchange=textSize(); readonly></div>
+	
+	</div>
+
+		<div class=togglebtn onclick=toggleID('borderset')>테두리</div>
+		<div class=toggle id=borderset>
+				스타일
+				<select class=el id=borderstyle value=solid onchange=borderStyle();>
+					<option value="none">없음</option>
+					<option value="solid" selected>solid</option>
+					<option value="dashed">dashed</option>
+					<option value="dotted">dotted</option>
+					<option value="double">double</option>
+					<option value="groove">groove</option>
+					<option value="inset">inset</option>
+					<option value="outset">outset</option>
+					<option value="ridge">ridge</option>
+				</select>
+			
+			<div class=el>색 <input id=bordercolor value="dddddd" class='color' onchange=borderColor(); readonly></div>
+			<div class=el>사이즈 <input data-slider="true" id=bordersize value=5 onchange=borderSize();></div>
+			</div>
+			<div onclick=toggleID('borderround') class=togglebtn>동글동글</div>
+				<div class=toggle id=borderround>
+					<div class=el>모두<input data-slider="true" id=radius onchange=radiusSet();></div>
+					<div class=el>왼쪽위<input value=0 data-slider="true" id=radius1 onchange=radiusSet1();></div>
+					<div class=el>오른쪽위<input value=4 data-slider="true" id=radius2 onchange=radiusSet2();></div>
+					<div class=el>오른쪽아래<input value=0 data-slider="true" id=radius3 onchange=radiusSet3();></div>
+					<div class=el>왼쪽아래<input value=4 data-slider="true" id=radius4 onchange=radiusSet4();></div>
+				</div>
+			
+		
+		
+
+	<div onclick=toggleID('shadowset') class=togglebtn>그림자</div>
+		<div class=toggle id=shadowset>
+			<div id=shadoweraze onclick=shadowEraze();>지우기</div>
+			<div class=el>가로 위치<input id=shadowsize1 data-slider="true" onchange=shadowSize1();></div>
+			<div class=el>세로 위치<input id=shadowsize2 data-slider="true" onchange=shadowSize2();></div>
+			<div class=el>크기<input id=shadowsize4 data-slider="true" onchange=shadowSize4();></div>
+			<div class=el>퍼지는 정도<input id=shadowsize3 data-slider="true" onchange=shadowSize3();></div>
+			<div class=el>색<input value='000' id=shadowcolor class=color type=text onchange=shadowColor();></div>
+		</div>
+	
+	<div onclick=toggleID('paddingset') class=togglebtn>여백</div>
+		<div class=toggle id=paddingset>
+			<div class=el>가로여백<input data-slider="true" id=paddingver type=text onchange=paddingSetver();></div>
+			<div class=el>세로여백<input data-slider="true"  id=paddinghor type=text onchange=paddingSethor();></div>
+		</div>
+	</div>
+	
+	
+
+	<div onclick=removeSelect() style=background-image:url(wallcon/minus.png) class=icon></div>
+
+	<div onclick=saveWall() style=background-image:url(wallcon/save.png) class=icon></div>
+	<?if ($id==$user_id){	?>
+	<div onclick=clearWall() style=background-image:url(wallcon/reset.png) class=icon></div>
+	<?}?>
+	<div onclick=location.replace('main.html') style=background-image:url(wallcon/back.png);background-size:60' class=icon></div>
+
+	
+
+	
+
+	
+
+	</div>
+</div>
+	
+<div id=namespace style='margin-top:30px;background: rgba(255,255,255,0.6);'><font size=5><center><?echo $name?></center></font></div>	
+ <div id=layer-zone>
+ 
+ 
+ 
+ <?echo $wall[0];?></div>
+
+
+<div id=message onclick=hideID("message")></div>
+	
+
+	
+	
+	<script type="text/javascript">
+odd=0;
+shadowcolor = '';
+textareaval = '';
+shadowsize1 = 0;
+shadowsize2 = 0;
+shadowsize3 = 0;
+shadowsize4 = 0;
+selalert = true;
+radi1="3%";
+radi2=0;
+radi3="3%";
+radi4=0;
+radisize=5;
+op=1;
+borderstyle="solid";
+bordersize=1;
+textsize="14px";
+textcolor=000;
+bordercolor="ddd";
+backcolor="FFF";
+ver = 0;
+hor = 0;
+selector = "<div id=selector>선택</div>";
+selected = true;
+only=0;
+textarea = "<textarea class=textarea onkeyup='resize(this);textSet(this);'></textarea>";
+$(function() {
+hideID('modify');
+hideID('message');
+hideID('result');
+hideID('plus');
+hideID('basicset');
+hideID('borderset');
+hideID('borderround');
+hideID('shadowset');
+hideID('paddingset');
+$('#makerbox').draggable();
+
+<?if ($id==$user_id){	?>
+
+		$('.layer').click(function(){
+		addThis(this);
+		});
+		
+		$('.imglayer').click(function(){
+		addThis(this);
+		});
+	<?}?>
+$(document).mousemove(function(event) {
+        x = event.pageX;
+        y = event.pageY;
+		
+    });
+$("body").on("dblclick",function(){
+	addNew();
+	$('.layer:last').css("top",y);
+	$('.layer:last').css("left",x);
+
+  });   
+	
+$("body").on("taphold",function(){
+	addNew();
+	$('.layer:last').css("top",y);
+	$('.layer:last').css("left",x);
+
+  });  
+	
+messageShow("낙서를 추가하려면 <br>화면을 길게 누르거나 더블클릭 해보세요.");
+})
+
+
+function addThis($id){
+		var text;
+		var p='';
+		$($id).rotatable();
+		$('#selector').remove();
+		$($id).resizable().draggable();
+		$($id).append(selector);
+		if ($($id).has('textarea').length==0){
+		$($id).append(textarea);
+		}
+		if ($($id).has('p').length!=0){
+		p = $($id).find('p').html();
+		
+		text = p.replace(/<br>/g,'\r\n');
+		$($id).find('p').remove();
+		$($id).find('textarea').val(text);
+		}
+		$($id).append("<p style=display:none>"+p+"</p>");
+		$($id).find('textarea').focus();
+		
+		
+}
+
+	function addNew(id, type){
+	odd++;
+		if (odd>1){
+		return false;
+		} 
+		setTimeout(function(){odd=0;},500);//더블클릭방지
+	only++;
+	<?if ($id!=$user_id){	?>
+	if (only>3)
+	{
+	messageShow('주인이 지켜보고 있습니다.');
+	return false;
+	}
+	<?}?>
+	
+	messageShow('낙서가 추가되었습니다. 낙서를 클릭하여 꾸며보세요.');
+	
+	$('#layer-zone').append("<div class='layer'></div>");
+		$('.layer:last').click(function(){
+		addThis(this);
+		});
+
+		
+		$('.layer:last').find('p').html(textareaval);
+		$('.layer:last').css("box-shadow",shadowsize1+" "+shadowsize2+" "+shadowsize3+" "+shadowsize4+" "+shadowcolor);
+		$('.layer:last').css("padding",hor+" "+ver);
+		$('.layer:last').css("border-radius",radi1+" "+radi2+" "+radi3+" "+radi4);
+		$('.layer:last').css("opacity",op);
+		$('.layer:last').css("border-style",borderstyle);
+		$('.layer:last').css("border-width",bordersize);
+		$('.layer:last').css("font-size",textsize);
+		$('.layer:last').css("color","#"+textcolor);
+		$('.layer:last').css("border-color","#"+bordercolor);
+		$('.layer:last').css("background-color","#"+backcolor);
+		addThis('.layer:last');
+	}
+
+
+
+
+
+function saveWall() {
+		$('textarea').remove();
+		$('p').show();
+		$('.ui-rotatable-handle').remove();
+		$('.ui-resizable-handle').remove();
+		$('#removewhensave').remove();
+		$('#namespace').remove();
+		$('#selector').remove();
+		
+		
+	/*	if($('.layer').length>10)
+		{
+		$('.layer:first').remove();
+		}
+		if($('.imglayer').length>10)
+		{
+		$('.imglayer:first').remove();
+		}*/ //레이어 제한 .
+		
+				
+
+
+				var save = $("#layer-zone").html();				
+				save = save.replace(/^\s*/,'');
+				save = save.replace(/\s*$/,'');
+				save = save.replace(/\r\n/g,'');
+                $.ajax({
+                        type: "POST",
+                        url: "php/savewall.php",
+                        data: {save: save, id: "<?echo $id?>"},
+                        success: function(response) {
+							if (response=="ok"){alert("저장되었습니다.");
+							}
+						   else{alert("오류가 발생했습니다.");}
+							location.reload();
+                        }
+                });
+}
+
+
+
+
+function schSomething() {
+
+		
+				var schword = $("#schimg").val();
+				schword = schword.replace(/ /g, ",");
+                $.ajax({
+                        type: "POST",
+                        url: "sch/imgforwall.php",
+                        data: {query: schword, id: <?echo $id?>},
+                        success: function(response) {
+							$("#result").html("");
+                           $("#result").append(response);
+						   $(function() {
+							$(".errorchk").error(function(){$(this).next().remove();});
+							$(".errorchk").hide();
+							});			   
+						   toggleID('result');
+						   
+                        }
+                });
+                return false;
+}
+
+
+
+function clearWall(){
+$('.layer').remove();
+$('.imglayer').remove();
+}
+
+	function resize(obj) {
+  obj.style.height = "1px";
+  obj.style.height = (20+obj.scrollHeight)+"px";
+}
+
+	function isSelector(){
+	if (selalert==true){
+		selalert=false
+	if($( "#selector" ).length==0){
+	messageShow("선택된 개체가 없습니다. 낙서나 그림을 클릭해보세요.");
+	setTimeout(function(){selalert=true;},10000);//더블클릭방지
+	return false;
+	}
+	else{
+	return true;
+	}
+	}
+
+	}
+
+	function removeSelect(){
+	isSelector()
+	$('#selector').parent().remove();
+	}
+	
+	function backColor(){
+	isSelector();
+	backcolor = $('#color').val();
+	$('#selector').parent().css("background-color","#"+backcolor);
+	
+	}
+	
+	function borderColor(){
+	isSelector();
+	bordercolor = $('#bordercolor').val();
+	$('#selector').parent().css("border-color","#"+bordercolor);
+	}
+	
+	function textColor(){
+	isSelector();
+	textcolor = $('#textcolor').val();
+	$('#selector').parent().css("color","#"+textcolor);
+	}
+	
+	function textSize(){
+	isSelector();
+	textsize = Math.ceil($('#textsize').val()*60+10);
+	$('#selector').parent().css("font-size",textsize);
+	}
+	
+	
+	function borderSize(){
+	isSelector();
+	bordersize = Math.ceil($('#bordersize').val()*50);
+	$('#selector').parent().css("border-width",bordersize);
+	}
+	
+	function borderStyle(){
+	isSelector();
+	borderstyle = $('#borderstyle').val();
+	$('#selector').parent().css("border-style",borderstyle);
+	}
+	
+	function opacitySet(){
+	isSelector();
+	op = Math.ceil($('#opacity').val()*10)/10;
+	$('#selector').parent().css("opacity",op);
+	}
+	
+	function radiusSet(){
+	isSelector();
+	radisize = Math.ceil($('#radius').val()*100);
+	$('#selector').parent().css("border-radius",radisize+"%");
+	}
+	
+	
+	function radiusSet1(){
+	isSelector();
+	radi1 = Math.ceil($('#radius1').val()*100)+"%";
+	$('#selector').parent().css("border-top-left-radius",radi1);
+	}
+	function radiusSet2(){
+	isSelector();
+	radi2 = Math.ceil($('#radius2').val()*100)+"%";
+	$('#selector').parent().css("border-top-right-radius",radi2);
+	}
+	function radiusSet3(){
+	isSelector();
+	radi3 = Math.ceil($('#radius3').val()*100)+"%";
+	$('#selector').parent().css("border-bottom-left-radius",radi3);
+	}
+	function radiusSet4(){
+	isSelector();
+	radi4 = Math.ceil($('#radius4').val()*100)+"%";
+	$('#selector').parent().css("border-bottom-right-radius",radi4);
+	}
+	
+	
+
+	function paddingSetver(){
+	isSelector();
+	ver = Math.ceil($('#paddingver').val()*150);
+	$('#selector').parent().css("padding",hor+" "+ver);
+	}	
+	
+	function paddingSethor(){
+	isSelector();
+	hor = Math.ceil($('#paddinghor').val()*150);
+	$('#selector').parent().css("padding",hor+" "+ver);
+	}
+	
+	function shadowEraze(){
+	isSelector();
+	$('#selector').parent().css("box-shadow","none");
+	
+	}
+
+	
+	function shadowColor(){
+	isSelector();
+	shadowcolor = $('#shadowcolor').val();
+	$('#selector').parent().css("box-shadow",shadowsize1+" "+shadowsize2+" "+shadowsize3+" "+shadowsize4+" "+shadowcolor);
+	}
+
+	function shadowSize1(){
+	isSelector();
+	shadowsize1 = Math.ceil(($('#shadowsize1').val()-0.5)*100) + "px";
+	$('#selector').parent().css("box-shadow",shadowsize1+" "+shadowsize2+" "+shadowsize3+" "+shadowsize4+" "+shadowcolor);
+	}	
+	
+	function shadowSize2(){
+	isSelector();
+	shadowsize2 = Math.ceil(($('#shadowsize2').val()-0.5)*100) + "px";
+	$('#selector').parent().css("box-shadow",shadowsize1+" "+shadowsize2+" "+shadowsize3+" "+shadowsize4+" "+shadowcolor);
+	}	
+
+	function shadowSize3(){
+	isSelector();
+	shadowsize3 = Math.ceil(($('#shadowsize3').val())*100) + "px";
+	$('#selector').parent().css("box-shadow",shadowsize1+" "+shadowsize2+" "+shadowsize3+" "+shadowsize4+" "+shadowcolor);
+	}	
+	
+	function shadowSize4(){
+	isSelector();
+	shadowsize4 = Math.ceil(($('#shadowsize4').val()-0.5)*100) + "px";
+	$('#selector').parent().css("box-shadow",shadowsize1+" "+shadowsize2+" "+shadowsize3+" "+shadowsize4+" "+shadowcolor);
+	}	
+	
+	
+	function textSet($id){
+	isSelector();
+	textareaval = $($id).val();
+	textareaval = textareaval.replace(/(?:\r\n|\r|\n)/g, "<br/>");
+	$('#selector').parent().find('p').html(textareaval);
+	}
+
+	
+	function toggleID(toggleid, effect, duration){
+	odd++;
+		if (odd>1){
+		return false();} 
+		setTimeout(function(){odd=0;},500);//더블클릭방지
+        $('.toggle').hide("blind",500);
+       if (effect)
+	   {$('#'+toggleid).toggle(effect, duration);}
+	   else{
+	   $('#'+toggleid).toggle("blind",500);}
+		event.stopPropagation();
+
+}
+
+function hideID(hideid, effect, duration){
+    $('#'+hideid).hide(effect, duration);
+}
+
+function messageShow(message)
+{
+showID("message","highlight",500);
+setTimeout(function(){hideID("message")},2500);
+$('#message').html(message);
+}
+function showID(showid, seffect, sduration) {
+    $('#'+showid).show(seffect, sduration);
+}
+	</script>
+
+</body>
+</html>
+<?mysql_close($connect);?>

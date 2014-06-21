@@ -1,0 +1,48 @@
+
+
+#container{margin: auto;
+width: 900;
+}
+
+#right{float: left;
+position:absolute;
+margin-left:600;
+width: 280;
+
+padding-left: 18;}
+#righticonbox{padding-top: 20;
+overflow: auto;}
+.righticon{cursor: hand;
+margin: 5;
+float: left;
+width: 40px;
+height: 40px;
+background-image: url(../icon/mycards.png);
+background-size: 40px;
+display: block;}
+#eqcaller{
+background-image: url(../icon/eq.png);
+}
+
+#writesomething{display: block;
+width: 50%;
+padding: 0 25%;
+height: 100%;
+position: absolute;
+z-index: 10;
+background-color: rgba(0,0,0,0.4);
+top: 0;
+padding-top: 100;}
+
+#left{float: left;
+width: 560;
+min-height:600;
+padding: 20;
+border-right: 1px dashed #ddd;
+/* border-radius: 20 0; */
+/* margin-top: 20; */
+}
+#first{padding: 15 0;
+border: 1px solid #ddd;
+padding-top: 30;
+}

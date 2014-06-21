@@ -1,0 +1,268 @@
+.<meta charset="utf-8" name="viewPort" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scale=no" />
+<?
+include "php/connect_db.php";
+?>
+<link rel="stylesheet" href="css/dropzone.css" />
+<link  type='text/css' rel='stylesheet' href='css/main.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='css/sch.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='css/cards.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='pub/pub.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='css/groupsetting.css' media='screen' />
+<link  type='text/css' rel='stylesheet' href='css/contain.css' media='screen' />
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/jquery.mobile-1.4.2.min.js"></script>
+
+<script type="text/javascript">try {document.execCommand('BackgroundImageCache', false, true);} catch(e) {}</script>
+<script type="text/javascript" src="http://openapi.map.naver.com/openapi/naverMap.naver?ver=2.0&key=9ce7651c45a02f279f823667b005356d"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script src="letter/loadmore.js"> </script>
+<script src="js/jquery-ui.js"></script>
+<script src="js/Chart.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel-3.0.6.pack.js"></script>
+<script type="text/javascript" src="js/jquery.fancybox.js?v=2.1.5"></script>
+<script src="js/chartforletter.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.fancybox.css?v=2.1.5" media="screen" />
+<script src="js/dropzone.js"></script>
+
+<script src="js/jquery.autosize.min.js"></script>
+<script src="js/mobiledrag.js"></script>
+<script src="js/facebook.js"></script>
+ <div id="fb-root"></div>
+<script type="text/javascript" src="js/jscolor/jscolor.js"></script> 
+<script src="js/main.js"></script>
+<script src="js/eq.js"></script>
+
+
+
+
+<script type="text/javascript">
+$user_id= "<?echo $user_id?>";
+$user_name = "<?echo $user_name?>";
+$user_profile="<?echo $user_data[10];?>";
+</script>
+<body>
+
+    <div id='topmenuwrap'>
+<div id=topcenter>
+<div id=toptogglemenu>
+<div id=topmenu>
+
+			<? 
+								
+			$sql = mysql_query("SELECT count(no) FROM alarm  WHERE `id` = '$user_id'");
+			$alarmcnt = mysql_fetch_array($sql,MYSQL_NUM); ?>
+            <div id='more' class='morenonclicked' style='width:17px;' onclick="toggleState('more');togglePOPUP('moregroups');">
+			<? if ($alarmcnt[0] !=0){ echo "<div id=alarm>$alarmcnt[0]</div>";}?></div>
+			
+                <div class='popup' id='moregroups'>
+                    <ul>
+							
+							
+								<?// no, id, message, function, date
+								if ($alarmcnt[0] !=0){
+								echo "
+								<li class=line>알림</li>";
+								if ($alarmcnt[0]>3)
+								{$tmps=3;}else{$tmps =$alarmcnt[0];}
+								for ($i=0;$i<$tmps;$i++){
+								$sql = mysql_query("SELECT * FROM alarm  WHERE `id` = '$user_id' order by no desc limit $i, 1");
+								$alarm = mysql_fetch_array($sql,MYSQL_NUM); // no, id, message, function, date 
+								$alarmno[$i] = $alarm[0];
+								echo "$alarm[2]";
+								}
+								if ($alarmcnt[0] > 3){
+								echo "<li style='font-family:dek'>...more...</li>";
+								}
+								echo "<li class=line style=height:1px></li>";
+								}
+
+								?>
+								
+								
+														
+							<li onclick="location.replace('login.html');">로그인</li>
+							<li class=line style=height:1px></li>
+							<li onclick="messageShow('로그인 후 이용하실 수 있습니다.');">PUB설정</li>
+							<li onclick="messageShow('로그인 후 이용하실 수 있습니다.');">친구관리</li>
+
+							
+							
+                    </ul>
+                </div>
+	    <div id="menubox">
+			<a class="menu ui-link" id="menu0" onclick="swipeLetter(0)" style="color: rgb(255, 64, 121); border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: rgb(255, 64, 121); padding-bottom: 0px;">
+			<font style="font-family:dek;font-size:10px">PUB</font>핫이슈</a>
+			<a class="menu ui-link" id="menu1" onclick="swipeLetter(1)" style="color: rgb(119, 119, 119); border-bottom-width: 0px; padding-bottom: 3px;">
+			<font style="font-family:dek;font-size:10px">PUB</font>ㅋㅋ</a>
+			<a class="menu ui-link" id="menu2" onclick="swipeLetter(2)" style="color: rgb(119, 119, 119); border-bottom-width: 0px; padding-bottom: 3px;">
+			<font style="font-family:dek;font-size:10px">PUB</font>고양이</a>
+			<a class="menu ui-link" id="menu3" onclick="swipeLetter(3)" style="color: rgb(119, 119, 119); border-bottom-width: 0px; padding-bottom: 3px;">
+			<font style="font-family:dek;font-size:10px">PUB</font>Girl</a>
+        </div>
+				
+				
+				
+
+			
+					<div id=schbox><input id='sch' placeholder="Search…" 
+					onclick="$('.popup').hide();" onKeyDown="findFriends();"><div class=popup id='about'></div></div>
+				<a id=writespin onclick="messageShow('로그인 후 이용하실 수 있습니다.');"></a>
+
+
+
+</div>
+
+
+
+		</div>
+
+	
+
+    </div></div>
+	
+	
+<script>
+			groupcolorshow = new Array(  'FF4079', '2929FF', '2929FF', '2929FF','');
+			groupnameajax = new Array(  '핫이슈', 'ㅋㅋ', '고양이', 'Girl','');
+			groupnumberfor = new Array(  'hotissue', 'humor', 'cat', 'girl','');
+			groupcnt = 4;
+			pagetypearray = new Array(  1, 1, 1, 1,'');
+</script>
+
+
+
+
+
+
+
+
+<div id=first></div>
+
+
+
+
+
+
+
+
+<div id=container>
+<div id=pointsbox class=hum>
+
+
+</div>
+<div id=left>
+
+
+
+
+
+
+
+
+
+
+
+<div id="mainpage">
+	
+
+</div>
+
+
+
+
+<!-- 팝업 -->
+
+
+
+
+</div>
+<div id=right>
+<div id=righticonbox>
+<a class=righticon onclick="messageShow('로그인 하시면 이퀄라이저를 저장하여 사용할 수 있습니다.');toggleID('eql')" id=eqcaller></a>
+</div>
+
+
+	<div id=eql class=letter style="display:none;">
+	<div id=eqt onclick=eqOnoff();><a id=eqicon></a>Equalizer <a id=eqstate><?echo $onoff?></a></div>
+	<div id=eqable <?echo $style?>>
+	<div id=pointseq></div>
+	<div id=humeq class=each></div>
+	<div id=symeq class=each></div>
+	<div id=woweq class=each></div>
+	<div id=goodeq class=each></div>
+	<div id=sadeq class=each></div>
+	</div>
+	</div>
+
+<div id=mycardek>
+<?
+$sql = mysql_query("SELECT `cards`from cards where id='$user_id'");
+$sql = mysql_fetch_array($sql,MYSQL_NUM);
+if ($sql[0]==null){?>
+
+
+<div id=tmpcards></div>
+<?}else{
+echo "<div id=tmpcards>$sql[0]</div>";
+}
+?>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+<div id=save style='display:none';></div>
+<div id=loading></div>
+<div id=messagewrap><div id=message onclick=hideID("message")></div></div>
+</div>
+
+<div id=resultfixed onclick="hideID('resultfixed')"><div id=result ></div></div>
+<?mysql_close($connect);?>
+<script>
+$( "#pointseq" ).slider({ range: "min", value:0, min: 0, max: 10, step: 1,
+      slide: function( event, ui ) { drag=true;
+		
+
+	setTimeout(function(){eq(1);}, 100);
+
+		} });
+$( "#pointseq" ).find('.ui-slider-handle').css('background-image','url(../icon/point.png)');
+$( "#pointseq" ).find('.ui-slider-handle').css('background-size',48);
+$( "#pointseq" ).find('.ui-slider-handle').width(44);
+$( "#pointseq" ).find('.ui-slider-handle').height(44);
+$( "#pointseq" ).find('.ui-slider-handle').css('margin-top',-23);
+$( "#pointseq" ).find('.ui-slider-handle').css('margin-left',-22);		
+
+
+ $( ".each" ).slider({ range: "min", value:0, min: 0, max: 50, step: 5,
+      slide: function( event, ui ) { drag=true;
+
+	setTimeout(function(){eq(1);}, 100);
+	} });
+$( "#humeq" ).find('.ui-slider-handle').css('background-image','url(../icon/humor.png)');
+$( "#symeq" ).find('.ui-slider-handle').css('background-image','url(../icon/shy.png)');
+$( "#woweq" ).find('.ui-slider-handle').css('background-image','url(../icon/suprise.png)');
+$( "#goodeq" ).find('.ui-slider-handle').css('background-image','url(../icon/good.png)');
+$( "#sadeq" ).find('.ui-slider-handle').css('background-image','url(../icon/sad.png)');
+
+</script>
